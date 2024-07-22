@@ -1,0 +1,13 @@
+.block-card{
+width: 288px;
+}
+
+.block-img{
+    width: 100px;
+}
+
+.block-body-card{
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}

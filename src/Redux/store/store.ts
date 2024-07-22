@@ -1,12 +1,12 @@
 import {configureStore} from "@reduxjs/toolkit";
-import {cartReducer} from "./store/CartSlice";
+import {ContactsReducer} from "./slice.ts";
 
 
 
 export const store = configureStore({
 
     reducer: {
-
+        contacts:ContactsReducer,
     }
 
 });
