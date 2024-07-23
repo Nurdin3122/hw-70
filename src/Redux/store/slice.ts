@@ -36,12 +36,20 @@ export const fetchOneContact = createAsyncThunk<Contact,string>(
     async (id:string) => {
         const response = await axiosApi.get<Contact | null>(`/contacts/${id}.json`);
         if (response.data) {
-            return { ...response.data, id };
+            return { ...response.data, id  };
         } else {
-            return console.log("No data found");
+            return console.log("No find");
         }
     }
 );
+
+export const fetchPostContact = createAsyncThunk(
+    "contacts/fetchPost",
+    async (newContact:string) => {
+        const response = await axiosApi.post<Contact>('/contacts.json',{newContact});
+        return response.data;
+    }
+)
 
 export const fetchDeleteContact = createAsyncThunk<string,string>(
     "contacts/fetchDelete",
@@ -93,14 +101,28 @@ const ContactSlice = createSlice<Contacts>({
         builder.addCase(fetchDeleteContact.pending,(state) => {
             state.loading = true ;
             state.error = false;
-        })
+        });
         builder.addCase(fetchDeleteContact.fulfilled,(state,action:PayloadAction<string>) => {
+            state.loading = false;
             state.contacts = state.contacts.filter(contact => contact.id !== action.payload);
-        })
+        });
         builder.addCase(fetchDeleteContact.rejected,(state) => {
             state.loading = false;
             state.error = true;
-        })
+        });
+
+
+        builder.addCase(fetchPostContact.pending,(state) => {
+            state.loading = true ;
+            state.error = false;
+        });
+        builder.addCase(fetchPostContact.fulfilled,(state) => {
+            state.loading = false;
+        });
+        builder.addCase(fetchPostContact.rejected,(state) => {
+            state.loading = false;
+            state.error = true;
+        });
     }
 });
 

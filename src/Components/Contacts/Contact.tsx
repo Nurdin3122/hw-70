@@ -14,32 +14,35 @@ const Contact = () => {
     const modalLoading = useSelector(state => state.contacts.modalLoading);
 
 
-    useEffect(() => {
+    useEffect (() => {
         dispatch(fetchContacts())
     }, [fetchContacts]);
 
-    const Click = (id:string) => {
-        dispatch(fetchOneContact(id));
-        dispatch(modalWindowBlock(true));
+    const Click = async (id:string) => {
+        await dispatch(fetchOneContact(id));
+        await dispatch(modalWindowBlock(true));
     }
+
+
+
     return (
         <>
-            {contacts.map(contact => (
-                loading ? <Spinner key={contact.id}/> : (
+            {loading ? <Spinner/> : (
+            contacts.map(contact => (
                     <div key={contact.id} className="card block-card mt-4 ms-auto me-auto" onClick={() => Click(contact.id)} style={{display: modalLoading ? "none": "block"}}>
                         <div className="d-flex">
                             <div className="block-img">
-                                <img className="card-img-top" src={`${contact.img}`}
+                                <img className="card-img-top" src={`${contact.newContact.img}`}
                                      alt="it not a picture here, sorry"/>
                             </div>
                             <div className="block-body-card">
-                                <p className="card-text">{contact.name}</p>
+                                <p className="card-text">{contact.newContact.name}</p>
                             </div>
                         </div>
                     </div>
-                )
-            ))}
-
+            ))
+            )
+            }
         </>
     );
 };
