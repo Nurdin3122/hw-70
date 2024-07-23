@@ -3,12 +3,11 @@ import {useDispatch, useSelector} from "react-redux";
 import "./modal.css"
 import {AppDispatch} from "../../Redux/store/store.ts";
 import {fetchDeleteContact, modalWindowBlock} from "../../Redux/store/slice.ts";
-import Block from "../Block/Block.tsx";
+import {Link} from "react-router-dom";
 
 const ModalWindow = () => {
     const dispatch:AppDispatch = useDispatch();
     const contact = useSelector(state => state.contacts.contact);
-    console.log(contact)
     const modalLoading = useSelector(state => state.contacts.modalLoading);
 
 
@@ -43,7 +42,7 @@ const ModalWindow = () => {
                         <button type="button" className="btn btn-secondary me-3"
                                 onClick={() => DeleteContact(contact.id)}>Delete
                         </button>
-                        <button type="button" className="btn btn-primary">Edit</button>
+                        <Link to={`/add-new-contact/${contact.id}`} type="button" className="btn btn-primary">Edit</Link>
                     </div>
                 </div>
         </>

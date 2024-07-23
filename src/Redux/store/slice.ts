@@ -26,7 +26,6 @@ export const fetchContacts = createAsyncThunk<Contact[]>(
             ...response.data[id],
             id,
         }))
-        console.log(contacts)
         return contacts ?? [];
     }
 );

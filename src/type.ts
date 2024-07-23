@@ -6,6 +6,7 @@ export interface Contact {
     img:string;
 }
 
+
 export interface ContactMutation {
     name:string;
     number:string;
