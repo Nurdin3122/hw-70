@@ -20,7 +20,7 @@ const Contact = () => {
 
     const Click = async (id:string) => {
         await dispatch(fetchOneContact(id));
-        await dispatch(modalWindowBlock(true));
+         dispatch(modalWindowBlock(true));
     }
 
 

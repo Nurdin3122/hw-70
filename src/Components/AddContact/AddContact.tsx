@@ -1,9 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {AppDispatch} from "../../Redux/store/store.ts";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {ContactMutation} from "../../type.ts";
-import {fetchContacts, fetchOneContact, fetchPostContact} from "../../Redux/store/slice.ts";
-import {useNavigate, useParams} from "react-router-dom";
+import {
+    fetchContacts,
+    fetchPostContact,
+} from "../../Redux/store/slice.ts";
+import {useNavigate} from "react-router-dom";
 
 
 
@@ -15,28 +18,10 @@ const emptyState:ContactMutation = {
 }
 
 const AddContact = () => {
-    const {id} = useParams()
     const dispatch:AppDispatch = useDispatch();
     const navigate = useNavigate();
-    const contact = useSelector(state => state.contacts.contact);
     const [newContact, setNewContact] = useState<ContactMutation>(emptyState);
 
-    useEffect(() => {
-        if (id) {
-            dispatch(fetchOneContact(id));
-        }
-    }, [id, dispatch]);
-
-    useEffect(() => {
-        if (contact && contact.newContact) {
-            setNewContact({
-                name: contact.newContact.name ,
-                number: contact.newContact.number,
-                mail: contact.newContact.mail ,
-                img: contact.newContact.img,
-            });
-        }
-    }, [contact]);
 
     const onFormSubmit = async (event:React.FormEvent) => {
         event.preventDefault();
@@ -54,8 +39,6 @@ const AddContact = () => {
 
     return (
         <>
-            <h3 className="mt-5 mb-3">Add Contact</h3>
-            <p>{id}</p>
             <form onSubmit={onFormSubmit}>
                 <div className="mb-3">
                     <label htmlFor="exampleInputPassword1" className="form-label">Name</label>
@@ -100,6 +83,10 @@ const AddContact = () => {
                            value={newContact.img}
                            onChange={changeContactForm}
                     />
+                </div>
+                <div className="mb-3">
+                    <p className="form-text">your picture:</p>
+                    <img src={`${newContact.img}`} alt="there is not a picture"/>
                 </div>
 
                 <button type="submit" className="btn btn-primary">Submit</button>

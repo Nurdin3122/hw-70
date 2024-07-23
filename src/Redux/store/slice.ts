@@ -48,6 +48,14 @@ export const fetchPostContact = createAsyncThunk(
         const response = await axiosApi.post<Contact>('/contacts.json',{newContact});
         return response.data;
     }
+);
+
+export const fetchPutContact = createAsyncThunk(
+    "contacts/fetchPut",
+    async (newContact) => {
+        const response = await axiosApi.put<Contact>(`/contacts/${newContact.id}.json`,{newContact});
+        return response.data;
+    }
 )
 
 export const fetchDeleteContact = createAsyncThunk<string,string>(
@@ -56,7 +64,7 @@ export const fetchDeleteContact = createAsyncThunk<string,string>(
         await axiosApi.delete(`/contacts/${id}.json`);
         return id;
     }
-)
+);
 
 
 const ContactSlice = createSlice<Contacts>({
@@ -119,6 +127,20 @@ const ContactSlice = createSlice<Contacts>({
             state.loading = false;
         });
         builder.addCase(fetchPostContact.rejected,(state) => {
+            state.loading = false;
+            state.error = true;
+        });
+
+
+        builder.addCase(fetchPutContact.pending,(state) => {
+            state.loading = true ;
+            state.error = false;
+        });
+        builder.addCase(fetchPutContact.fulfilled,(state,action:PayloadAction<Contact>) => {
+            state.loading = false;
+            state.contact = action.payload
+        });
+        builder.addCase(fetchPutContact.rejected,(state) => {
             state.loading = false;
             state.error = true;
         });
