@@ -1,7 +1,14 @@
 export interface Contact {
-    id:string
+    id:string;
     name:string;
     number:string;
     mail:string;
-    img:number;
+    img:string;
+}
+
+export interface ContactMutation {
+    name:string;
+    number:string;
+    mail:string;
+    img:string;
 }

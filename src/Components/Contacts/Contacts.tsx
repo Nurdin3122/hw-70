@@ -5,7 +5,7 @@ const Contacts = () => {
 
 
     return (
-        <div className="mt-5 d-flex  flex-column  justify-content-center">
+        <div className="mt-5">
             <Contact/>
         </div>
     );
